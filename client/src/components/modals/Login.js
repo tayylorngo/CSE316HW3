@@ -35,8 +35,6 @@ const Login = (props) => {
 
 
 	return (
-        // Replace div with WModal
-
 		<WModal visible className="login-modal">
 			<WMHeader className="modal-header" onClose={() => props.setShowLogin(false)}>
 				Login
