@@ -43,6 +43,8 @@ const TableEntry = (props) => {
         props.editItem(data._id, 'assigned_to', newAssignedTo, prevAssignedTo);
     }
 
+    const assignedToStyle = status === 'complete' ? {color: "black"} : {color: "red"};
+
     return (
         <WRow className='table-entry'>
             <WCol size="3">
@@ -97,7 +99,7 @@ const TableEntry = (props) => {
                         autoFocus={true} defaultValue={assignedTo} type='text'
                         wType="outlined" barAnimation="solid" inputClass="table-input-class"
                     />
-                    : <div className="table-text"
+                    : <div className="table-text" style={assignedToStyle}
                         onClick={() => toggleAssignedToEdit(!editingAssignedTo)}
                     >{assignedTo}
                     </div>
