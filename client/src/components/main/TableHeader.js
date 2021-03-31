@@ -22,7 +22,7 @@ const TableHeader = (props) => {
             </WCol>
 
             <WCol size="2">
-                <WButton className='table-header-section' wType="texted" >Status</WButton>
+                <WButton className='table-header-section' wType="texted" >Assigned To</WButton>
             </WCol>
 
             <WCol size="2">

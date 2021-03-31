@@ -9,9 +9,11 @@ const TableEntry = (props) => {
     const description = data.description;
     const due_date = data.due_date;
     const status = data.completed ? 'complete' : 'incomplete';
+    const assignedTo = data.assigned_to;
     const [editingDate, toggleDateEdit] = useState(false);
     const [editingDescr, toggleDescrEdit] = useState(false);
     const [editingStatus, toggleStatusEdit] = useState(false);
+    const [editingAssignedTo, toggleAssignedToEdit] = useState(false);
 
     const handleDateEdit = (e) => {
         toggleDateEdit(false);
@@ -33,6 +35,13 @@ const TableEntry = (props) => {
         const prevStatus = status;
         props.editItem(data._id, 'completed', newStatus, prevStatus);
     };
+
+    const handleAssignedToEdit = (e) => {
+        toggleAssignedToEdit(false);
+        const newAssignedTo = e.target.value ? e.target.value : false;
+        const prevAssingedTo = assignedTo; 
+        props.editItem(data._id, 'assigned_to', newAssignedTo, prevAssingedTo);
+    }
 
     return (
         <WRow className='table-entry'>
@@ -82,7 +91,16 @@ const TableEntry = (props) => {
 
             <WCol size="2">
                 {
-
+                    editingAssignedTo || assignedTo === ''
+                    ? <WInput
+                        className='table-input' onBlur={handleAssignedToEdit}
+                        autoFocus={true} defaultValue={assignedTo} type='text'
+                        wType="outlined" barAnimation="solid" inputClass="table-input-class"
+                    />
+                    : <div className="table-text"
+                        onClick={() => toggleAssignedToEdit(!editingAssignedTo)}
+                    >{assignedTo}
+                    </div>
                 }
             </WCol>
 

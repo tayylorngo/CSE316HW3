@@ -79,7 +79,7 @@ const Homescreen = (props) => {
 			id: lastID,
 			description: 'No Description',
 			due_date: 'No Date',
-			assigned_to: props.user._id,
+			assigned_to: props.user.firstName + " " + props.user.lastName,
 			completed: false
 		};
 		let opcode = 1;
@@ -115,7 +115,6 @@ const Homescreen = (props) => {
 		let transaction = new EditItem_Transaction(listID, itemID, field, prev, value, flag, UpdateTodoItemField);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
-
 	};
 
 	const reorderItem = async (itemID, dir) => {
@@ -123,7 +122,6 @@ const Homescreen = (props) => {
 		let transaction = new ReorderItems_Transaction(listID, itemID, dir, ReorderTodoItems);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
-
 	};
 
 	const createNewList = async () => {
