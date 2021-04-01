@@ -7,9 +7,6 @@ const TableHeader = (props) => {
     const buttonStyle = props.disabled ? ' table-header-button-disabled ' : 'table-header-button ';
     const clickDisabled = () => { };
 
-    const undoButtonStyle = props.disabledUndo ? {pointerEvents: "none", color: "#322d2d"} : {pointerEvents: "auto", color: "#e9edf0"};
-    const redoButtonStyle = props.disabledRedo ? {pointerEvents: "none", color: "#322d2d"} : {pointerEvents: "auto", color: "#e9edf0"};
-
     return (
         <WRow className="table-header">
             <WCol size="3">
@@ -30,10 +27,10 @@ const TableHeader = (props) => {
 
             <WCol size="2">
                 <div className="table-header-buttons">
-                    <WButton onClick={props.disabledUndo ? clickDisabled : props.undo} wType="texted" className={`${buttonStyle}`} style={undoButtonStyle}>
+                    <WButton onClick={props.disabledUndo ? clickDisabled : props.undo} wType="texted" className={`${buttonStyle}`} style={props.undoStyle}>
                         <i className="material-icons">undo</i>
                     </WButton>
-                    <WButton onClick={props.disabledRedo ? clickDisabled : props.redo} wType="texted" className={`${buttonStyle}`} style={redoButtonStyle}>
+                    <WButton onClick={props.disabledRedo ? clickDisabled : props.redo} wType="texted" className={`${buttonStyle}`} style={props.redoStyle}>
                         <i className="material-icons">redo</i>
                     </WButton>
                     <WButton onClick={props.disabled ? clickDisabled : props.addItem} wType="texted" className={`${buttonStyle}`}>

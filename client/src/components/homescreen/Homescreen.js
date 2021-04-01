@@ -191,6 +191,14 @@ const Homescreen = (props) => {
 		props.tps.clearAllTransactions();
 	}
 
+	let undoButtonStyle = {pointerEvents: "none", color: "#322d2d"};
+	let redoButtonStyle = {pointerEvents: "none", color: "#322d2d"};
+
+	if(!props.tps.isPerformingDo() && !props.tps.isPerformingUndo()){
+		undoButtonStyle = props.tps.hasTransactionToUndo() ? {pointerEvents: "auto", color: "#e9edf0"} : {pointerEvents: "none", color: "#322d2d"};
+		redoButtonStyle = props.tps.hasTransactionToRedo() ? {pointerEvents: "auto", color: "#e9edf0"} : {pointerEvents: "none", color: "#322d2d"};
+	}
+	
 	return (
 		<WLayout wLayout="header-lside">
 			<WLHeader>
@@ -235,7 +243,7 @@ const Homescreen = (props) => {
 									editItem={editItem} reorderItem={reorderItem}
 									setShowDelete={setShowDelete}
 									activeList={activeList} setActiveList={setActiveList}
-									disabledUndo={props.tps.getUndoSize() === 0} disabledRedo={props.tps.getRedoSize() === 0}
+									undoStyle={undoButtonStyle} redoStyle={redoButtonStyle}
 									undo={tpsUndo} redo={tpsRedo} closeList={closeList}
 								/>
 							</div>
