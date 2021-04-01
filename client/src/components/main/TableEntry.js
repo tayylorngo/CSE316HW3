@@ -44,6 +44,14 @@ const TableEntry = (props) => {
     }
 
     const assignedToStyle = status === 'complete' ? {color: "black"} : {color: "red"};
+    let firstElementStyle = null;
+    if(props.isFirst){
+        firstElementStyle = {pointerEvents: "none", color: "#322d2d"};
+    }
+    let lastElementStyle = null;
+    if(props.isLast){
+        lastElementStyle = {pointerEvents: "none", color: "#322d2d"};
+    }
 
     return (
         <WRow className='table-entry'>
@@ -108,10 +116,10 @@ const TableEntry = (props) => {
 
             <WCol size="2">
                 <div className='button-group'>
-                    <WButton className="table-entry-buttons" onClick={() => props.reorderItem(data._id, -1)} wType="texted">
+                    <WButton className="table-entry-buttons" onClick={() => props.reorderItem(data._id, -1)} wType="texted" style={firstElementStyle}>
                         <i className="material-icons">expand_less</i>
                     </WButton>
-                    <WButton className="table-entry-buttons" onClick={() => props.reorderItem(data._id, 1)} wType="texted">
+                    <WButton className="table-entry-buttons" onClick={() => props.reorderItem(data._id, 1)} wType="texted" style={lastElementStyle}>
                         <i className="material-icons">expand_more</i>
                     </WButton>
                     <WButton className="table-entry-buttons" onClick={() => props.deleteItem(data)} wType="texted">
