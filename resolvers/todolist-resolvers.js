@@ -16,7 +16,6 @@ module.exports = {
 			if(!_id) { return([])};
 			const todolists = await Todolist.find({owner: _id});
 			if(todolists) return (todolists);
-
 		},
 		/** 
 		 	@param 	 {object} args - a todolist id
@@ -83,7 +82,6 @@ module.exports = {
 			const updated = await Todolist.updateOne({_id: listId}, { items: listItems })
 			if(updated) return (listItems);
 			else return (found.items);
-
 		},
 		/** 
 		 	@param 	 {object} args - a todolist objectID 
@@ -162,7 +160,6 @@ module.exports = {
 			// return old ordering if reorder was unsuccessful
 			listItems = found.items;
 			return (found.items);
-
 		}
 
 	}

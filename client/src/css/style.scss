@@ -192,3 +192,14 @@ html, body {
 .table-entry-buttons {
     color: $text-color;
 }
+
+.defaultUndoRedo{
+    pointer-events: none;
+    color: #322d2d;
+}
+
+.activeUndoRedo{
+    pointer-events: auto;
+     color: #e9edf0;
+}
+

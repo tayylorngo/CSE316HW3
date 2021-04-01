@@ -17,7 +17,6 @@ import { UpdateListField_Transaction,
 	EditItem_Transaction } 				from '../../utils/jsTPS';
 import WInput from 'wt-frontend/build/components/winput/WInput';
 
-
 const Homescreen = (props) => {
 
 	let todolists 							= [];
@@ -136,24 +135,31 @@ const Homescreen = (props) => {
 		}
 		const { data } = await AddTodolist({ variables: { todolist: list }, refetchQueries: [{ query: GET_DB_TODOS }] });
 		setActiveList(list)
+		props.tps.clearAllTransactions();
 	};
 
 	const deleteList = async (_id) => {
 		DeleteTodolist({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_TODOS }] });
 		refetch();
 		setActiveList({});
+		props.tps.clearAllTransactions();
 	};
 
 	const updateListField = async (_id, field, value, prev) => {
 		let transaction = new UpdateListField_Transaction(_id, field, prev, value, UpdateTodolistField);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
-
 	};
 
 	const handleSetActive = (id) => {
 		const todo = todolists.find(todo => todo.id === id || todo._id === id);
+		// let index = todolists.indexOf(todo);
+		// // let tempLists = [...todolists];
+		// // tempLists.splice(index, 1);
+		// // tempLists.unshift(todo);
+		// // todolists = tempLists;
 		setActiveList(todo);
+		props.tps.clearAllTransactions();
 	};
 
 	
@@ -178,6 +184,11 @@ const Homescreen = (props) => {
 		toggleShowCreate(false);
 		toggleShowLogin(false);
 		toggleShowDelete(!showDelete)
+	}
+
+	const closeList = () => {
+		setActiveList({});
+		props.tps.clearAllTransactions();
 	}
 
 	return (
@@ -208,6 +219,7 @@ const Homescreen = (props) => {
 								handleSetActive={handleSetActive} createNewList={createNewList}
 								undo={tpsUndo} redo={tpsRedo}
 								updateListField={updateListField}
+								closeList={closeList}
 							/>
 							:
 							<></>
@@ -223,6 +235,8 @@ const Homescreen = (props) => {
 									editItem={editItem} reorderItem={reorderItem}
 									setShowDelete={setShowDelete}
 									activeList={activeList} setActiveList={setActiveList}
+									disabledUndo={props.tps.getUndoSize() === 0} disabledRedo={props.tps.getRedoSize() === 0}
+									undo={tpsUndo} redo={tpsRedo} closeList={closeList}
 								/>
 							</div>
 						:
