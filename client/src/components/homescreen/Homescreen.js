@@ -198,7 +198,13 @@ const Homescreen = (props) => {
 		undoButtonStyle = props.tps.hasTransactionToUndo() ? {pointerEvents: "auto", color: "#e9edf0"} : {pointerEvents: "none", color: "#322d2d"};
 		redoButtonStyle = props.tps.hasTransactionToRedo() ? {pointerEvents: "auto", color: "#e9edf0"} : {pointerEvents: "none", color: "#322d2d"};
 	}
-	
+
+	let addListButtonStyle = null;
+	let listNotActive = Object.keys(activeList).length === 0;
+	if(!listNotActive){
+		addListButtonStyle = {pointerEvents: "none", color: "#322d2d", backgroundColor:"#40454e"};
+	}
+		
 	return (
 		<WLayout wLayout="header-lside">
 			<WLHeader>
@@ -227,7 +233,7 @@ const Homescreen = (props) => {
 								handleSetActive={handleSetActive} createNewList={createNewList}
 								undo={tpsUndo} redo={tpsRedo}
 								updateListField={updateListField}
-								closeList={closeList}
+								closeList={closeList} listActive={addListButtonStyle}
 							/>
 							:
 							<></>
