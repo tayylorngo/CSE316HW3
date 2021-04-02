@@ -18,6 +18,7 @@ const SidebarEntry = (props) => {
     };
 
     const entryStyle = props.id === props.activeid ? 'list-item list-item-active' : 'list-item ';
+    const firstStyle = props.isFirst ? {color: "#ffc800"} : null;
     
     return (
         <WNavItem 
@@ -26,7 +27,7 @@ const SidebarEntry = (props) => {
         >
             {
                 editing ? <WInput className="list-item-edit" inputClass="list-item-edit-input" wType="lined" barAnimation="solid" name='name' onBlur={handleSubmit} autoFocus={true} defaultValue={props.name} />
-                    :   <div className='list-text'>
+                    :   <div className='list-text' style={firstStyle}>
                             {props.name}
                         </div>
             }
