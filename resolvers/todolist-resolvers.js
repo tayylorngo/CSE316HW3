@@ -160,7 +160,22 @@ module.exports = {
 			// return old ordering if reorder was unsuccessful
 			listItems = found.items;
 			return (found.items);
-		}
+		},
 
+		moveListToTop: async (_, args) => {
+			const {_id} = args;
+            const objectId = new ObjectId(_id);
+            const found = await Todolist.find({_id: objectId});
+            const deleted = await Todolist.deleteOne({_id: objectId});
+            const newList = new Todolist({
+                _id: objectId,
+                id: found[0].id,
+                name: found[0].name,
+                owner: found[0].owner,
+                items: found[0].items
+            })
+            const updated = newList.save();
+            return true;
+		}
 	}
 }

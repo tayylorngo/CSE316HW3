@@ -32,6 +32,7 @@ const Homescreen = (props) => {
 	const [DeleteTodoItem] 			= useMutation(mutations.DELETE_ITEM);
 	const [AddTodolist] 			= useMutation(mutations.ADD_TODOLIST);
 	const [AddTodoItem] 			= useMutation(mutations.ADD_ITEM);
+	const [MoveListToTop] 			= useMutation(mutations.MOVE_LIST_TO_TOP);
 
 
 	const { loading, error, data, refetch } = useQuery(GET_DB_TODOS);
@@ -153,12 +154,10 @@ const Homescreen = (props) => {
 
 	const handleSetActive = (id) => {
 		const todo = todolists.find(todo => todo.id === id || todo._id === id);
-		// let index = todolists.indexOf(todo);
-		// // let tempLists = [...todolists];
-		// // tempLists.splice(index, 1);
-		// // tempLists.unshift(todo);
-		// // todolists = tempLists;
 		setActiveList(todo);
+		MoveListToTop({variables: {_id: String(todo._id)},refetchQueries: [{ query: GET_DB_TODOS }] });
+		refetch();
+		refetch();
 		props.tps.clearAllTransactions();
 	};
 
