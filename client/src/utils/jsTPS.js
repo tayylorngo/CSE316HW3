@@ -84,7 +84,7 @@ export class EditItem_Transaction extends jsTPS_Transaction {
 /*  Handles create/delete of list items */
 export class UpdateListItems_Transaction extends jsTPS_Transaction {
     // opcodes: 0 - delete, 1 - add 
-    constructor(listID, itemID, item, opcode, addfunc, delfunc) {
+    constructor(listID, itemID, item, opcode, addfunc, delfunc, addItemToIndexFunc, index) {
         super();
         this.listID = listID;
 		this.itemID = itemID;
@@ -92,6 +92,8 @@ export class UpdateListItems_Transaction extends jsTPS_Transaction {
         this.addFunction = addfunc;
         this.deleteFunction = delfunc;
         this.opcode = opcode;
+        this.addItemToIndexFunc = addItemToIndexFunc;
+        this.index = index;
     }
     async doTransaction() {
 		let data;
@@ -102,11 +104,20 @@ export class UpdateListItems_Transaction extends jsTPS_Transaction {
 		if(this.opcode !== 0) {
             this.item._id = this.itemID = data.addItem;
 		}
+        if(this.opcode === 0){
+            this.deletedItem = true;
+        }
 		return data;
     }
     // Since delete/add are opposites, flip matching opcode
     async undoTransaction() {
 		let data;
+
+        if(this.deletedItem && this.opcode === 0){
+            data = await this.addItemToIndexFunc({variables: {item: this.item, index: this.index, _id: this.listID}});
+            return data;
+        }
+
         this.opcode === 1 ? { data } = await this.deleteFunction({
 							variables: {itemId: this.itemID, _id: this.listID}})
                           : { data } = await this.addFunction({

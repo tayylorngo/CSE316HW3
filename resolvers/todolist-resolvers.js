@@ -49,6 +49,21 @@ module.exports = {
 			if(updated) return (item._id);
 			else return ('Could not add item');
 		},
+
+		addItemAtIndex: async(_, args) => {
+			const {item, index, _id} = args;
+			const listId = new ObjectId(_id);
+			const objectId = new ObjectId();
+			const found = await Todolist.findOne({_id: listId});
+			if(!found) return ('Todolist not found');
+			if(item._id === '') item._id = objectId;
+			let listItems = found.items; 
+			listItems.splice(index, 0, item);
+			const updated = await Todolist.updateOne({_id: listId}, { items: listItems });
+
+			if(updated) return (item._id);
+			else return ('Could not add item');
+		},
 		/** 
 		 	@param 	 {object} args - an empty todolist object
 			@returns {string} the objectID of the todolist or an error message

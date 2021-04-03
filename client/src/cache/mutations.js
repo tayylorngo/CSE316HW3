@@ -33,6 +33,12 @@ export const ADD_ITEM = gql`
 	mutation AddItem($item: ItemInput!, $_id: String!) {
 		addItem(item: $item, _id: $_id)
 	}
+	`;
+
+export const ADD_ITEM_AT_INDEX = gql`
+	mutation AddItemAtIndex($item: ItemInput!, $index: Int!, $_id: String!){
+		addItemAtIndex(item: $item, index: $index, _id: $_id)
+	}
 `;
 
 export const DELETE_ITEM = gql`

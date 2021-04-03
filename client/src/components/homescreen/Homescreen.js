@@ -33,6 +33,7 @@ const Homescreen = (props) => {
 	const [AddTodolist] 			= useMutation(mutations.ADD_TODOLIST);
 	const [AddTodoItem] 			= useMutation(mutations.ADD_ITEM);
 	const [MoveListToTop] 			= useMutation(mutations.MOVE_LIST_TO_TOP);
+	const [AddItemAtIndex]			= useMutation(mutations.ADD_ITEM_AT_INDEX);
 
 
 	const { loading, error, data, refetch } = useQuery(GET_DB_TODOS);
@@ -85,7 +86,7 @@ const Homescreen = (props) => {
 		let opcode = 1;
 		let itemID = newItem._id;
 		let listID = activeList._id;
-		let transaction = new UpdateListItems_Transaction(listID, itemID, newItem, opcode, AddTodoItem, DeleteTodoItem);
+		let transaction = new UpdateListItems_Transaction(listID, itemID, newItem, opcode, AddTodoItem, DeleteTodoItem, AddItemAtIndex, -1);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
 	};
@@ -103,7 +104,15 @@ const Homescreen = (props) => {
 			assigned_to: item.assigned_to,
 			completed: item.completed
 		}
-		let transaction = new UpdateListItems_Transaction(listID, itemID, itemToDelete, opcode, AddTodoItem, DeleteTodoItem);
+		
+		let index = -1;
+		for(let i = 0; i < activeList.items.length; i++){
+			if (activeList.items[i]._id === itemToDelete._id){
+				index = i;
+				break;
+			}
+		}
+		let transaction = new UpdateListItems_Transaction(listID, itemID, itemToDelete, opcode, AddTodoItem, DeleteTodoItem, AddItemAtIndex, index);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
 	};
@@ -155,7 +164,7 @@ const Homescreen = (props) => {
 	const handleSetActive = (id) => {
 		const todo = todolists.find(todo => todo.id === id || todo._id === id);
 		setActiveList(todo);
-		MoveListToTop({variables: {_id: String(todo._id)},refetchQueries: [{ query: GET_DB_TODOS }] });
+		MoveListToTop({variables: {_id: String(todo._id)}, refetchQueries: [{ query: GET_DB_TODOS }] });
 		refetch();
 		refetch();
 		props.tps.clearAllTransactions();
