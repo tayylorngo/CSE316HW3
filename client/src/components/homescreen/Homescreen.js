@@ -241,7 +241,7 @@ const Homescreen = (props) => {
 								handleSetActive={handleSetActive} createNewList={createNewList}
 								undo={tpsUndo} redo={tpsRedo}
 								updateListField={updateListField}
-								closeList={closeList} listActive={addListButtonStyle}
+								closeList={closeList} listActive={addListButtonStyle} notActiveList={Object.keys(activeList).length === 0}
 							/>
 							:
 							<></>

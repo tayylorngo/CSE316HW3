@@ -18,8 +18,8 @@ const SidebarEntry = (props) => {
     };
 
     const entryStyle = props.id === props.activeid ? 'list-item list-item-active' : 'list-item ';
-    const firstStyle = props.isFirst ? {color: "#ffc800"} : null;
-    
+    const firstStyle = props.isFirst && !props.notActiveList ? {color: "#ffc800"} : null;
+
     return (
         <WNavItem 
             className={entryStyle} onDoubleClick={handleEditing} 
