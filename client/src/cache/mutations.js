@@ -103,3 +103,16 @@ export const MOVE_LIST_TO_TOP = gql`
         moveListToTop(_id: $_id)
     }`
 ;
+
+export const SORT_LIST = gql`
+	mutation SortList($_id: String!, $field: String!){
+		sortList(_id: $_id, field: $field){
+			_id
+			id
+			description
+			due_date
+			assigned_to
+			completed
+		}
+	}
+`;

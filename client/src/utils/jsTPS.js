@@ -129,7 +129,25 @@ export class UpdateListItems_Transaction extends jsTPS_Transaction {
     }
 }
 
+export class SortListItems_Transaction extends jsTPS_Transaction{
+    constructor(listID, field, sortingFunc){
+        super();
+        this.listID = listID;
+        this.field = field;
+        this.sortingFunc = sortingFunc;
+    }
+    
+    async doTransaction(){
+        const { data } = await this.sortingFunc({ variables:{ _id: this.listID, field: this.field }});
+        return data;
+    }
 
+    async undoTransaction(){
+
+
+
+    }
+}
 
 
 export class jsTPS {

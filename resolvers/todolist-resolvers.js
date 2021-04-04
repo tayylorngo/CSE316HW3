@@ -191,6 +191,20 @@ module.exports = {
             })
             const updated = newList.save();
             return true;
+		},
+
+		sortList: async (_, args) => {
+			const {_id, field} = args;
+			const listId = new ObjectId(_id);
+			const found = await Todolist.findOne({_id: listId});
+			let listItems = found.items;
+			listItems.sort((a, b) => (String(a[field]).localeCompare(String(b[field]))));
+			if(listItems === found.items){
+				listItems.sort((a, b) => (String(b[field]).localeCompare(String(a[field]))));
+			}
+			const updated = await Todolist.updateOne({_id: listId}, { items: listItems })
+			if(updated) return (listItems);
+			else return (found.items);
 		}
 	}
 }
