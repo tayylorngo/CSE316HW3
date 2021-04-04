@@ -198,8 +198,9 @@ module.exports = {
 			const listId = new ObjectId(_id);
 			const found = await Todolist.findOne({_id: listId});
 			let listItems = found.items;
+			let listItemsCopy = [...listItems];
 			listItems.sort((a, b) => (String(a[field]).localeCompare(String(b[field]))));
-			if(listItems === found.items){
+			if(JSON.stringify(listItems) === JSON.stringify(listItemsCopy)){
 				listItems.sort((a, b) => (String(b[field]).localeCompare(String(a[field]))));
 			}
 			const updated = await Todolist.updateOne({_id: listId}, { items: listItems })
