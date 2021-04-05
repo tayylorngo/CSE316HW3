@@ -10,19 +10,19 @@ const TableHeader = (props) => {
     return (
         <WRow className="table-header">
             <WCol size="3">
-                <WButton className='table-header-section' wType="texted" onClick={() => props.sortList(props.currentListId, 'description')}>Task</WButton>
+                <WButton className='table-header-section' wType="texted" onClick={!props.disabled ? () => props.sortList(props.currentListId, 'description'): null}>Task</WButton>
             </WCol>
 
             <WCol size="2">
-                <WButton className='table-header-section' wType="texted" onClick={() => props.sortList(props.currentListId, 'due_date')}>Due Date</WButton>
+                <WButton className='table-header-section' wType="texted" onClick={!props.disabled ? () => props.sortList(props.currentListId, 'due_date'): null}>Due Date</WButton>
             </WCol>
 
             <WCol size="2">
-                <WButton className='table-header-section' wType="texted" onClick={() => props.sortList(props.currentListId, 'completed')}>Status</WButton>
+                <WButton className='table-header-section' wType="texted" onClick={!props.disabled ? () => props.sortList(props.currentListId, 'completed'): null}>Status</WButton>
             </WCol>
 
             <WCol size="2">
-                <WButton className='table-header-section' wType="texted" onClick={() => props.sortList(props.currentListId, 'assigned_to')}>Assigned To</WButton>
+                <WButton className='table-header-section' wType="texted" onClick={!props.disabled ? () => props.sortList(props.currentListId, 'assigned_to'): null}>Assigned To</WButton>
             </WCol>
 
             <WCol size="2">
