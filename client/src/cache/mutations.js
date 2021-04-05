@@ -116,3 +116,9 @@ export const SORT_LIST = gql`
 		}
 	}
 `;
+
+export const SET_LIST = gql`
+	mutation SetList($_id: String!, $items: [ItemInput]){
+		setList(_id: $_id, items: $items)
+	}
+`;

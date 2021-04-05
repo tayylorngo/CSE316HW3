@@ -35,6 +35,7 @@ const Homescreen = (props) => {
 	const [MoveListToTop] 			= useMutation(mutations.MOVE_LIST_TO_TOP);
 	const [AddItemAtIndex]			= useMutation(mutations.ADD_ITEM_AT_INDEX);
 	const [SortList]				= useMutation(mutations.SORT_LIST);
+	const [SetList]					= useMutation(mutations.SET_LIST);
 
 
 	const { loading, error, data, refetch } = useQuery(GET_DB_TODOS);
@@ -172,7 +173,7 @@ const Homescreen = (props) => {
 	};
 
 	const sortList = async (_id, field) => {
-		let transaction = new SortListItems_Transaction(_id, field, SortList);
+		let transaction = new SortListItems_Transaction(_id, field, SortList, SetList, activeList.items);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
 	}

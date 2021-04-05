@@ -32,6 +32,7 @@ const typeDefs = gql `
 		moveListToTop(_id: String!): Boolean
 		addItemAtIndex(item: ItemInput!, index: Int!, _id: String!): String
 		sortList(_id: String!, field: String!): [Item]
+		setList(_id: String!, items: [ItemInput]): Boolean
 	}
 	input FieldInput {
 		_id: String

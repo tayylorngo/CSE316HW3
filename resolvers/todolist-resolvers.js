@@ -206,6 +206,16 @@ module.exports = {
 			const updated = await Todolist.updateOne({_id: listId}, { items: listItems })
 			if(updated) return (listItems);
 			else return (found.items);
+		},
+
+		setList: async (_, args) => {
+			const {_id, items} = args;
+			const listId = new ObjectId(_id);
+			const updated = await Todolist.updateOne({_id: listId}, { items: items });
+			if(updated){
+				return true;
+			}
+			else return false;
 		}
 	}
 }
