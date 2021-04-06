@@ -219,7 +219,27 @@ const Homescreen = (props) => {
 	if(!listNotActive){
 		addListButtonStyle = {pointerEvents: "none", color: "#322d2d", backgroundColor:"#40454e"};
 	}
-		
+
+	const keyboardInput = (e) => {
+		if(e.ctrlKey && e.which === 90){
+            if(props.tps.hasTransactionToUndo()){
+                tpsUndo();
+            }
+		}
+		else if(e.ctrlKey && e.which === 89){
+            if(props.tps.hasTransactionToRedo()){
+                tpsRedo();
+            }
+		}
+	}
+    
+	useEffect(() => {
+		document.addEventListener('keydown', keyboardInput, false);
+		return () => {
+			document.removeEventListener('keydown', keyboardInput, false);
+		}
+	});
+
 	return (
 		<WLayout wLayout="header-lside">
 			<WLHeader>
